@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="" xml:lang="">
+  <head>
+    <title>Github: A Collaborative Code-Sharing Tool</title>
+    <meta charset="utf-8" />
+    <meta name="author" content="Nelsha Athauda" />
+    <meta name="date" content="2022-10-18" />
+    <script src="libs/header-attrs/header-attrs.js"></script>
+    <link href="libs/remark-css/default.css" rel="stylesheet" />
+    <link href="libs/remark-css/default-fonts.css" rel="stylesheet" />
+  </head>
+  <body>
+    <textarea id="source">
+class: center, middle, inverse, title-slide
+
+.title[
+# Github: A Collaborative Code-Sharing Tool
+]
+.author[
+### Nelsha Athauda
+]
+.date[
+### 2022-10-18
+]
+
+---
+
+
+
+
+
+## What is Github?
+
+"The complete developer platform to build, scale, and deliver secure software."
+
+- Data Analysis
+- Version History
+  - See history of changes made to a document
+  - Revert to older versions of a document
+  - Try new things out without breaking things that work
+- Collaboration
+
+tl;dr: Stop saving fifty copies of the same file with different names
+
+---
+
+## Terminology
+
+- Repository
+  - A directory of (ideally) plain-text files (.html, .txt, .R, .Rmd, etc.) 
+  included in a project
+- Commit
+  - A unique flag for a particular state of your project
+  - Every push to the server is an updated version = a new commit
+- History
+  - All of the commits for a project
+
+---
+
+## Example repository
+
+![An example GitHub repository](Example_Repo.png)
+
+This is a repository of the code that I wrote for my Data Science Toolkit Final
+Exam. It compares data across two collocated air quality samplers. 
+The repository is the directory of files. The README.md file describes the 
+project and how to run it. 
+
+---
+
+## Example commit
+
+![An example GitHub commit history](Example_Commit.png)
+
+If you click on a commit on GitHub, you can  see what lines 
+were modified. 
+The old version appears in red and the new version
+in green. 
+
+---
+
+## Commit History
+
+![An example GitHub commit history](All_Commits.png)
+
+This is the full project history, each commit is a different version.
+
+---
+
+## Using a terminal
+
+Unless you want to upload your files directly to the website (inconvenient), 
+you will need to learn how to use your computer's terminal. 
+
+All devices have a command line (Command Prompt) but you can download a WSL 
+(Windows Subsystem for Linux) like Ubuntu which can download R itself and be 
+used as a one-stop console and terminal. 
+
+WSL or Command Prompt can be selected in your IDE (I use RStudio or Sublime 
+Text Editor 4)
+
+---
+
+## Starting with Github
+
+Go to https://github.com/ and create a GitHub account. Also go into your 
+settings and create a PAT (Personal Access Token) which will be required
+to access your Github account from a terminal. 
+
+Copy and paste your PAT somewhere easy to find or you'll have to make a 
+new one!!
+
+---
+
+## Using Simple bash commands to create a local directory
+
+
+```bash
+cd ~/Desktop # Change Directory to where your project is 
+mkdir myproject # Make directory titled ___
+cd myproject/ # Navigate to the project
+
+git init # Initialize repository
+```
+
+Important: For any file addresses, use forward slashes only! A back slash in bash means to disregard the next character (used if you have spaces in the address)
+
+Copied from File explorer: 
+C:\Users\nrathauda\OneDrive - University of Alaska\R
+
+Adapted to bash: 
+C:/Users/nrathauda/OneDrive\ -\ University\ of\ Alaska/R
+---
+
+## Maintain your local repository
+
+
+```bash
+git status # shows what files have changed since your last commit
+git add # tell git which files to add to this commit
+git add . # Adds all files in the folder 
+git commit -m "I fixed so many things!" 
+# make a commit with a message `-m`
+git push origin main # New terminology is to name a branch 'Main'
+push the master branch to the origin remote
+```
+
+---
+
+## Create a online repository (GitHub)
+
+GitHub is the online platform. Create a repository on the website and copy the 
+HTTPS share link to create a remote (bridge) between the Hub and your local 
+repository
+
+![Where to find your share link](GitHub_Share.png)
+
+
+
+```bash
+git remote add origin https://github.com/[your-username]/[repository-name.git]
+git push -u origin main 
+# Pushing your origin (local repo) to the Hub (online repo) on the Main branch
+```
+
+---
+
+## Check your GitHub profile 
+
+If everything pushed successfully, there should be a recent commit!
+
+.center[![Congrats!](Dancing_Skeleton.gif)]
+
+---
+
+## Using Branches
+
+If you want to try something risky but don't want to mess up your current working code you can use branches
+Commit the working version on your normal branch (Main)
+Start working on your risky changes but commit the updates to a new branch (Ex. Branch1)
+If your new branch works out, you can merge the changes you made onto your original Main branch
+
+
+```bash
+# make a branch called Branch1
+git branch Branch1
+# checkout is used to switch between branches
+git checkout Branch1
+# see all branches
+git branch
+```
+
+---
+
+## Using Branches (cont.)
+
+Both branches can be edited, merging will add/delete to the branch you want it to act on
+
+
+```bash
+# Switch back to the original branch
+git checkout Main
+# Merge the changes on Branch1 to Main 
+git merge Branch1
+```
+
+Merge conflicts will come up if you edited the same lines in different branches and will have to be resolved manually (git will show you which lines)
+
+---
+
+## Other ways to collaborate
+
+If you notice a bug in someone's code you can file an issue (Similar to a YouTube comment)
+
+.center[![Congrats!](GitHub_Issues.png)]
+
+Or you can create a pull request
+
+- Fork the repo on GitHub
+- git clone to download to local machine
+- Modify code (read contributing guidelines first!)
+- Commit changes
+- git push back to GitHub
+- Submit a pull request
+
+---
+
+## Pull Request Workflow
+
+
+```bash
+# add friend's repo as a remote branch
+git remote add wrongdoer https://github.com/wrongdoer/repo
+# downloads friend's branch, but do not merge it yet
+git fetch wrongdoer master
+# view all local and remote branches
+git branch -a
+# checkout friends remote branch
+git checkout remotes/wrongdoer/master
+# make a local branch based on friend's repo
+git checkout -b wrongdoer
+# test out the branch; make sure it works as expected
+[...]
+# checkout local master, merge, push
+git checkout master
+git merge wrongdoer
+git push origin master
+```
+
+Now the fixed code is in YOUR repository
+
+---
+
+To give the fixed code to the person who created the version with a bug, create a pull request on Github, in their repository
+
+.center[![Congrats!](GitHub_PR.png)]
+
+---
+
+## On the receiving end of a pull request?
+
+Merge it on GitHUb itself
+To add it to your local copy, git fetch or git pull
+
+git fetch
+ - Download code separately from your local repository.
+ - Explicitly merge into your local repository.
+
+git pull
+ - fetch and merge at the same time
+ - Faster, but you can't verify that the code works before changing your local repository.
+
+---
+
+## Want to see/use/adapt someone else's code?
+
+Find the repository on GitHub and fork it to create a copy that you can alter.
+
+.center[![GitHub Fork!](GitHub_Fork.png)]
+
+To bring the copy to your local device, use git clone
+
+
+```bash
+git clone https://github.com/Your-name/The-Forks-name
+```
+
+
+---
+
+## Goal: Recode the Bridged race categories in a way that respects people reporting more than one race, for pre-2013 shift in race categories
+
+---
+
+##Option 1
+
+### Incorporate bridged race variables into the category they were bridged to
+
+Ex. 
+
+Bridged Black -&gt; Black
+Bridged AI/AN -&gt; AI/AN
+Bridged Asian AND PI -&gt; Randomly distributed into Asian or PI based on a ratio
+Bridged White -&gt; White
+
+Pros: Simple
+
+Cons: Loses any nuance in outcomes for people reporting more than one race
+
+---
+
+## Option 2
+
+### Add weights to each record reporting more than one race
+
+Build a weight system, multiply records, assign each duplicate record with a weight and different race
+
+Ex. Each Bridged Black record -&gt; 0.5 Black, 0.25 White, 0.11 AI/AN, etc.
+
+Pros: Will be fine for simple counts, distributing into more than one race equally as we don't know what other race category they would have selected if they had the option
+
+Cons: Will make other analysis really difficult
+
+---
+
+## Option 3
+
+### Combine all bridged records into one large 'More than one race' category
+
+Pros: Parsimonious, acknowledges that there is a different experience, already written code, what AK Vital Records will be doing after this year
+
+Cons: No nuance between the exact race categories but we don't have that info anyways, complies with the NIH desired race variables
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    </textarea>
+<style data-target="print-only">@media screen {.remark-slide-container{display:block;}.remark-slide-scaler{box-shadow:none;}}</style>
+<script src="https://remarkjs.com/downloads/remark-latest.min.js"></script>
+<script>var slideshow = remark.create({
+"highlightStyle": "github",
+"highlightLines": true,
+"countIncrementalSlides": false
+});
+if (window.HTMLWidgets) slideshow.on('afterShowSlide', function (slide) {
+  window.dispatchEvent(new Event('resize'));
+});
+(function(d) {
+  var s = d.createElement("style"), r = d.querySelector(".remark-slide-scaler");
+  if (!r) return;
+  s.type = "text/css"; s.innerHTML = "@page {size: " + r.style.width + " " + r.style.height +"; }";
+  d.head.appendChild(s);
+})(document);
+
+(function(d) {
+  var el = d.getElementsByClassName("remark-slides-area");
+  if (!el) return;
+  var slide, slides = slideshow.getSlides(), els = el[0].children;
+  for (var i = 1; i < slides.length; i++) {
+    slide = slides[i];
+    if (slide.properties.continued === "true" || slide.properties.count === "false") {
+      els[i - 1].className += ' has-continuation';
+    }
+  }
+  var s = d.createElement("style");
+  s.type = "text/css"; s.innerHTML = "@media print { .has-continuation { display: none; } }";
+  d.head.appendChild(s);
+})(document);
+// delete the temporary CSS (for displaying all slides initially) when the user
+// starts to view slides
+(function() {
+  var deleted = false;
+  slideshow.on('beforeShowSlide', function(slide) {
+    if (deleted) return;
+    var sheets = document.styleSheets, node;
+    for (var i = 0; i < sheets.length; i++) {
+      node = sheets[i].ownerNode;
+      if (node.dataset["target"] !== "print-only") continue;
+      node.parentNode.removeChild(node);
+    }
+    deleted = true;
+  });
+})();
+// add `data-at-shortcutkeys` attribute to <body> to resolve conflicts with JAWS
+// screen reader (see PR #262)
+(function(d) {
+  let res = {};
+  d.querySelectorAll('.remark-help-content table tr').forEach(tr => {
+    const t = tr.querySelector('td:nth-child(2)').innerText;
+    tr.querySelectorAll('td:first-child .key').forEach(key => {
+      const k = key.innerText;
+      if (/^[a-z]$/.test(k)) res[k] = t;  // must be a single letter (key)
+    });
+  });
+  d.body.setAttribute('data-at-shortcutkeys', JSON.stringify(res));
+})(document);
+(function() {
+  "use strict"
+  // Replace <script> tags in slides area to make them executable
+  var scripts = document.querySelectorAll(
+    '.remark-slides-area .remark-slide-container script'
+  );
+  if (!scripts.length) return;
+  for (var i = 0; i < scripts.length; i++) {
+    var s = document.createElement('script');
+    var code = document.createTextNode(scripts[i].textContent);
+    s.appendChild(code);
+    var scriptAttrs = scripts[i].attributes;
+    for (var j = 0; j < scriptAttrs.length; j++) {
+      s.setAttribute(scriptAttrs[j].name, scriptAttrs[j].value);
+    }
+    scripts[i].parentElement.replaceChild(s, scripts[i]);
+  }
+})();
+(function() {
+  var links = document.getElementsByTagName('a');
+  for (var i = 0; i < links.length; i++) {
+    if (/^(https?:)?\/\//.test(links[i].getAttribute('href'))) {
+      links[i].target = '_blank';
+    }
+  }
+})();
+// adds .remark-code-has-line-highlighted class to <pre> parent elements
+// of code chunks containing highlighted lines with class .remark-code-line-highlighted
+(function(d) {
+  const hlines = d.querySelectorAll('.remark-code-line-highlighted');
+  const preParents = [];
+  const findPreParent = function(line, p = 0) {
+    if (p > 1) return null; // traverse up no further than grandparent
+    const el = line.parentElement;
+    return el.tagName === "PRE" ? el : findPreParent(el, ++p);
+  };
+
+  for (let line of hlines) {
+    let pre = findPreParent(line);
+    if (pre && !preParents.includes(pre)) preParents.push(pre);
+  }
+  preParents.forEach(p => p.classList.add("remark-code-has-line-highlighted"));
+})(document);</script>
+
+<script>
+slideshow._releaseMath = function(el) {
+  var i, text, code, codes = el.getElementsByTagName('code');
+  for (i = 0; i < codes.length;) {
+    code = codes[i];
+    if (code.parentNode.tagName !== 'PRE' && code.childElementCount === 0) {
+      text = code.textContent;
+      if (/^\\\((.|\s)+\\\)$/.test(text) || /^\\\[(.|\s)+\\\]$/.test(text) ||
+          /^\$\$(.|\s)+\$\$$/.test(text) ||
+          /^\\begin\{([^}]+)\}(.|\s)+\\end\{[^}]+\}$/.test(text)) {
+        code.outerHTML = code.innerHTML;  // remove <code></code>
+        continue;
+      }
+    }
+    i++;
+  }
+};
+slideshow._releaseMath(document);
+</script>
+<!-- dynamically load mathjax for compatibility with self-contained -->
+<script>
+(function () {
+  var script = document.createElement('script');
+  script.type = 'text/javascript';
+  script.src  = 'https://mathjax.rstudio.com/latest/MathJax.js?config=TeX-MML-AM_CHTML';
+  if (location.protocol !== 'file:' && /^https?:/.test(script.src))
+    script.src  = script.src.replace(/^https?:/, '');
+  document.getElementsByTagName('head')[0].appendChild(script);
+})();
+</script>
+  </body>
+</html>
